@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const schema = mongoose_1.default.Schema;
 const commentScheme = new schema({
+    User: {
+        type: String,
+        required: true,
+    },
     comment: {
         type: String,
         required: true,

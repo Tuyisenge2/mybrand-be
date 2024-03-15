@@ -14,18 +14,83 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const commentscheme_1 = __importDefault(require("../model/commentscheme"));
 const blogSchem_1 = __importDefault(require("../model/blogSchem"));
+const mongoose_1 = __importDefault(require("mongoose"));
 //create comment 
 const newComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Id = req.params.id;
-        const comment = new commentscheme_1.default({
-            comment: req.body.comment,
-            blogId: Id
-        });
+        console.log(Id);
+        if (!mongoose_1.default.Types.ObjectId.isValid(Id)) {
+            return res.status(400).json({
+                message: "No Id found in our database"
+            });
+        }
         const blog = yield blogSchem_1.default.findById(Id);
-        yield (comment === null || comment === void 0 ? void 0 : comment.save());
-        res.send(commentscheme_1.default);
+        if (!blog) {
+            return res.status(404).json({
+                message: "Blog not found"
+            });
+        }
+        const comment = new commentscheme_1.default({
+            User: req.body.User,
+            comment: req.body.comment,
+            blogId: Id,
+        });
+        const com = yield comment.save();
+        console.log(com.comment);
+        blog.commentArray.push(com.comment);
+        yield blog.save();
+        console.log(blog);
+        //  blog.commentArray.push(savedComment.comment);
+        return res.status(201).json({
+            status: "Success",
+            message: "Comment added successfully",
+            comment: com,
+            blog: blog
+        });
     }
-    catch (Error) { }
+    catch (Error) {
+        console.error(Error);
+        return res.status(500).json({
+            status: "Denied access",
+            message: "incomplete operation",
+        });
+    }
 });
-exports.default = { newComment };
+// get all comments
+const getAllComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid comment ID' });
+        }
+        const comments = yield commentscheme_1.default.find({ blogId: id });
+        if (!comments) {
+            return res.status(404).json({ message: 'No comments found' });
+        }
+        return res.status(200).json({ message: 'Comments retrieved successfully', data: comments });
+    }
+    catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ message: 'Internal server error', error: error });
+    }
+});
+// get single comments 
+const getSingleComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const commentId = req.params.id;
+        if (!mongoose_1.default.Types.ObjectId.isValid(commentId)) {
+            return res.status(400).json({ message: 'Invalid comment ID' });
+        }
+        const comment = yield commentscheme_1.default.findById(commentId);
+        if (!comment) {
+            return res.status(404).json({ message: 'Comment not found' });
+        }
+        return res.status(200).json({ message: 'Comment retrieved successfully', data: comment });
+    }
+    catch (error) {
+        console.error('Error:', error);
+        return res.status(500).json({ message: 'Internal server error', error: error });
+    }
+});
+exports.default = { newComment, getAllComment, getSingleComment };

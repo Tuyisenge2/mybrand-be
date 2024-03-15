@@ -2,10 +2,23 @@ import express from 'express';
 
 import BlogRoutes from './routes';
 
+import comRouter from './comment.routes';
+
+import QuerriesRouter from './querries.routes';
+import likeRout from './like.routet';
+
+import userRout from './user.route';
+
 const apiRouter = express.Router();
 
-apiRouter.use('/Blogs', BlogRoutes);
+apiRouter.use('/blogs', BlogRoutes);
 
-//module.exports = apiRouter;
+apiRouter.use('/blogs', comRouter);
+
+apiRouter.use('/blogs', QuerriesRouter);
+
+apiRouter.use('/blogs',likeRout)
+
+apiRouter.use('/users',userRout)
 
 export default apiRouter;

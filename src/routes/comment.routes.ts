@@ -1,7 +1,15 @@
 import  express from "express";
-const router=express.Router();
+
+const comRouter=express.Router();
+
 import commentController from "../controllers/comment.controller";
 
-router.post("/",commentController.newComment)
+comRouter.post("/:id/comments",commentController.newComment)
 
-export default router;
+//getAllComment on blog
+comRouter.get("/:id/comments",commentController.getAllComment)
+
+//getSinglecomments
+
+comRouter.get("/comments/:id",commentController.getSingleComment)
+export default comRouter;

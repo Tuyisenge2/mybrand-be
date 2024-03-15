@@ -8,7 +8,12 @@ const schema = new mongoose_1.default.Schema({
     title: String,
     summary: String,
     description: String,
-    commentArray: [],
+    commentArray: {
+        type: [String]
+    },
+    likesArray: {
+        type: [String]
+    }
 });
 //  module.exports = mongoose.model("Post", schema)
 exports.default = mongoose_1.default.model("BLog", schema);

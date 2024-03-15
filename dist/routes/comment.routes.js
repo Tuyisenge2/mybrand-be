@@ -4,7 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const router = express_1.default.Router();
+const comRouter = express_1.default.Router();
 const comment_controller_1 = __importDefault(require("../controllers/comment.controller"));
-router.post("/", comment_controller_1.default.newComment);
-exports.default = router;
+comRouter.post("/:id/comments", comment_controller_1.default.newComment);
+//getAllComment on blog
+comRouter.get("/:id/comments", comment_controller_1.default.getAllComment);
+//getSinglecomments
+comRouter.get("/comments/:id", comment_controller_1.default.getSingleComment);
+exports.default = comRouter;

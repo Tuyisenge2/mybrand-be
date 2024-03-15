@@ -17,11 +17,14 @@ const blogSchem_1 = __importDefault(require("../model/blogSchem"));
 const GetAllblog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blogs = yield blogSchem_1.default.find();
-        res.send(blogs);
+        return res.status(200).json({
+            status: 200,
+            blog: blogs
+        });
     }
     catch (error) {
         // Handle errors appropriately
-        res.status(500).send({ error: 'An error occurred while fetching blogs' });
+        return res.status(500).json({ error: 'An error occurred while fetching blogs' });
     }
 });
 //Create Blog
@@ -31,44 +34,54 @@ const newBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         summary: req.body.summary,
         description: req.body.description,
     });
-    yield blog.save();
-    res.send(blog);
+    try {
+        yield blog.save();
+        res.status(201).json(blog);
+    }
+    catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 });
-//Get individual Blog
 const singleBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blog = yield blogSchem_1.default.findOne({ _id: req.params.id });
-        res.send(blog);
+        if (!blog) {
+            res.status(404).json({ error: "Blog doesn't exist!" });
+            return;
+        }
+        res.status(200).json(blog);
     }
-    catch (_a) {
-        res.status(404);
-        res.send({ error: "Post doesn't exist!" });
+    catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
-//update Blog 
 const updateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const blog = yield blogSchem_1.default.findById(req.params.id, {
+        const blog = yield blogSchem_1.default.findByIdAndUpdate(req.params.id, {
             title: req.body.title,
             content: req.body.content,
-        });
-        yield (blog === null || blog === void 0 ? void 0 : blog.save());
-        res.send(blog);
+        }, { new: true });
+        if (!blog) {
+            res.status(404).json({ error: "Blog doesn't exist!" });
+            return;
+        }
+        res.status(200).json(blog);
     }
-    catch (_b) {
-        res.status(404);
-        res.send({ error: "Post doesn't exist!" });
+    catch (error) {
+        res.status(400).json({ error: error.message });
     }
 });
-// delete Blog 
 const deleteBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield blogSchem_1.default.deleteOne({ _id: req.params.id });
-        res.status(204).send();
+        const deletedBlog = yield blogSchem_1.default.findByIdAndDelete(req.params.id);
+        if (!deletedBlog) {
+            res.status(404).json({ error: "Blog doesn't exist!" });
+            return;
+        }
+        res.status(204).json();
     }
-    catch (_c) {
-        res.status(404);
-        res.send({ error: "Post doesn't exist!" });
+    catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 exports.default = { GetAllblog, newBlog, singleBlog, updateBlog, deleteBlog };

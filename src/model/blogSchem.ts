@@ -4,7 +4,12 @@
         title: String,
         summary:String,
         description: String,
-        commentArray: [],
+        commentArray: {
+          type:[String]
+        },
+        likesArray: {
+          type: [String]  
+      }
     })
     
   //  module.exports = mongoose.model("Post", schema)
