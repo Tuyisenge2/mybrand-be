@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const SignupSchema = Joi.object({
+const Signupvalid = Joi.object({
     firstname: Joi.string().required(),
     lastname: Joi.string().required(),
     email: Joi.string().email().required(),
@@ -12,7 +12,7 @@ const SignupSchema = Joi.object({
 });
 
 const validateSignup = (user:any) => {
-    return SignupSchema.validate(user);
+    return Signupvalid.validate(user);
 };
 
 export default validateSignup;

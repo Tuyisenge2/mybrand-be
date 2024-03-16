@@ -17,11 +17,13 @@ const querries_mode_1 = __importDefault(require("../model/querries.mode"));
 const GetAllQuerries = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const querries = yield querries_mode_1.default.find();
-        res.send(querries);
+        return res.status(200).json({ querries: querries,
+            status: 200
+        });
     }
     catch (error) {
         // Handle errors appropriately
-        res.status(500).send({ error: 'An error occurred while fetching querries' });
+        return res.status(500).json({ error: 'An error occurred while fetching querries' });
     }
 });
 //Create querries
@@ -31,17 +33,24 @@ const newQuerries = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         message: req.body.message,
     });
     yield querries.save();
-    res.send(querries);
+    return res.status(200).json({
+        status: 200,
+        querries: querries
+    });
 });
 //Get individual querries
 const singleQuerries = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const querries = yield querries_mode_1.default.findOne({ _id: req.params.id });
-        res.send(querries);
+        return res.status(200).json({
+            querries: querries
+        });
     }
     catch (_a) {
         res.status(404);
-        res.send({ error: " doesn't exist!" });
+        return res.status(500).json({
+            error: "internal server error"
+        });
     }
 });
 exports.default = { GetAllQuerries, newQuerries, singleQuerries };

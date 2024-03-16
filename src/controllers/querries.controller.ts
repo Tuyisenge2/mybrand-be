@@ -7,11 +7,13 @@ const GetAllQuerries =  async (req: Express.Request, res: Express.Response) => {
     try {
         
         const querries = await Querries.find();
-        res.send(querries);
+       return  res.status(200).json({querries:querries,
+    status:200
+    });
 
       } catch (error) {
         // Handle errors appropriately
-        res.status(500).send({ error: 'An error occurred while fetching querries' });
+       return res.status(500).json({ error: 'An error occurred while fetching querries' });
       }
   
   }
@@ -24,7 +26,9 @@ const newQuerries = async ( req: Express.Request, res: Express.Response) => {
         message:req.body.message,
     })
     await querries.save()
-    res.send(querries)
+   return res.status(200).json({
+    status:200,
+    querries:querries})
 }
 
 //Get individual querries
@@ -32,10 +36,13 @@ const newQuerries = async ( req: Express.Request, res: Express.Response) => {
 const singleQuerries= async (req: Express.Request, res: Express.Response) => {
     try {
         const querries = await Querries.findOne({ _id: req.params.id })
-        res.send(querries)
+       return res.status(200).json({
+        querries:querries
+    })
     } catch {
         res.status(404)
-        res.send({ error: " doesn't exist!" })
+    return res.status(500).json({ 
+        error: "internal server error" })
     }
 }
 

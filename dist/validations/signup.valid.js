@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const joi_1 = __importDefault(require("joi"));
-const SignupSchema = joi_1.default.object({
+const Signupvalid = joi_1.default.object({
     firstname: joi_1.default.string().required(),
     lastname: joi_1.default.string().required(),
     email: joi_1.default.string().email().required(),
@@ -15,6 +15,6 @@ const SignupSchema = joi_1.default.object({
     gender: joi_1.default.string().valid('male', 'female', 'other').required()
 });
 const validateSignup = (user) => {
-    return SignupSchema.validate(user);
+    return Signupvalid.validate(user);
 };
 exports.default = validateSignup;

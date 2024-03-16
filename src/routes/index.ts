@@ -15,7 +15,7 @@ apiRouter.use('/blogs', BlogRoutes);
 
 apiRouter.use('/blogs', comRouter);
 
-apiRouter.use('/blogs', QuerriesRouter);
+apiRouter.use('/', QuerriesRouter);
 
 apiRouter.use('/blogs',likeRout)
 
