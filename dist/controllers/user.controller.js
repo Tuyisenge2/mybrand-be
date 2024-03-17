@@ -36,7 +36,7 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(hashedPass);
         yield newUser.save();
         res.status(201).json({ message: 'User created successfully',
-            user: newUser });
+        });
     }
     catch (error) {
         console.error('Error adding user:', error);
@@ -56,19 +56,34 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!user || user.password === null || user.password === undefined) {
             console.log("password is ", password, " and user was ", user);
             return res.status(404).json({
-                message: "wrong informations"
+                message: "an empty filled to fill "
             });
+        }
+        const existingToken = req.headers.authorization;
+        if (existingToken) {
+            try {
+                const decoded = jsonwebtoken_1.default.verify(existingToken, 'eonfeinefiueriu');
+                if (decoded) {
+                    return res.status(409).json({
+                        message: 'User is already logged in'
+                    });
+                }
+                else {
+                }
+            }
+            catch (error) {
+                console.log("error", error);
+            }
         }
         const isPasswordValid = yield bcrypt_1.default.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'Invalid password' });
         }
-        const token = yield jsonwebtoken_1.default.sign({ id: user._id }, 'eonfeinefiueriu', { expiresIn: '1h' });
+        const token = yield jsonwebtoken_1.default.sign({ id: user._id }, 'eonfeinefiueriu', { expiresIn: '2min' });
         if (!token) {
             throw new Error('Failed to generate token');
         }
         return res.status(200).json({
-            user: user,
             message: "log in successfull",
             token: token
         });

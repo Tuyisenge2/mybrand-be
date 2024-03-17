@@ -83,28 +83,21 @@ const isPasswordValid = await bcrypt.compare(password, user.password);
             return res.status(401).json({ message: 'Invalid password' });
         }
 
-        const token = await jwt.sign({ id: user._id }, 'eonfeinefiueriu', { expiresIn: '1h' });
+        const token = await jwt.sign({ id: user._id }, 'eonfeinefiueriu', { expiresIn: '2min' });
    
         if (!token) {
             throw new Error('Failed to generate token');
         }
-         return res.status(202).json( {
-            message:"log in successfulloiwohwhe9uijnewuijewouiewioewnioewiewweioewhehur",
-            token: token ,
-            user:user
+         return res.status(200).json( {
+            message:"log in successfull",
+            token: token
+           
         } );
     } catch (error) {
         console.error('Error logging in user:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-
-
-
-
-
-
-
 
 
 export  default {addUser,loginUser};
