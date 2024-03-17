@@ -29,7 +29,7 @@ const hashedPass=await  bcrypt.hash(password,salt);
         await newUser.save();
 
         res.status(201).json({ message: 'User created successfully',
-         user: newUser });
+          });
 
     } catch (error) {
         console.error('Error adding user:', error);
@@ -54,9 +54,27 @@ const hashedPass=await  bcrypt.hash(password,salt);
 if(!user||user.password===null||user.password===undefined)
 {   console.log("password is ", password, " and user was ",user)
      return res.status(404).json({
-        message:"wrong informations"
+        message:"an empty filled to fill "
     })
 }
+
+
+const existingToken = req.headers.authorization;
+
+if (existingToken) {
+    try {
+        const decoded = jwt.verify(existingToken, 'eonfeinefiueriu');
+
+         if (decoded) {
+             return res.status(409).json({
+                message: 'User is already logged in'
+            });
+        } else {
+         }
+    } catch (error) {
+         console.log("error",error);
+    }}
+
 
 
 const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -70,11 +88,11 @@ const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!token) {
             throw new Error('Failed to generate token');
         }
-         return res.status(200).json({
-            user:user,
-            message:"log in successfull",
-            token: token 
-        });
+         return res.status(202).json( {
+            message:"log in successfulloiwohwhe9uijnewuijewouiewioewnioewiewweioewhehur",
+            token: token ,
+            user:user
+        } );
     } catch (error) {
         console.error('Error logging in user:', error);
         res.status(500).json({ message: 'Internal server error' });

@@ -6,6 +6,7 @@ import Express, { Request, Response } from 'express';
   const GetAllblog =  async ( req: Request, res: Response ) => {
     try {
         
+        
         const blogs = await Blog.find();
         return res.status(200).json({
             status:200,

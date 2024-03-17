@@ -1,7 +1,6 @@
 //const app=require("./app.js");
 import app from './app'
- import mongodb from './services/mongodb';
-
+import mongodb from './services/mongodb';
 const startServer = async () => {
   await mongodb.mongoConnect();
 
