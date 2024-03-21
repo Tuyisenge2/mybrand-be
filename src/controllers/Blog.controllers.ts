@@ -4,12 +4,11 @@ import Express, { Request, Response } from 'express';
 
 //Get all BLog
   const GetAllblog =  async ( req: Request, res: Response ) => {
-    try {
-        
-        
+    try {        
         const blogs = await Blog.find();
         return res.status(200).json({
             status:200,
+            message:"success",
             blog:blogs
         });
       } catch (error) {
@@ -21,17 +20,36 @@ import Express, { Request, Response } from 'express';
   
 //Create Blog
 const newBlog = async (req: Request, res: Response ) => {
+    try {
     const blog = new Blog({
         title: req.body.title,
         summary: req.body.summary,
         description: req.body.description,
     });
 
-    try {
+    const existingTitle = await Blog.findOne({title:req.body.title });
+    
+    if(existingTitle){
+    return res.status(400).json({
+        status:400,
+        message:"Title has been used"
+    })
+
+}
+      
+
         await blog.save();
-        res.status(201).json(blog);
+return  res.status(201).json({
+    status:201,
+    message:"Blog created successfully",
+    blog:blog
+
+});
     } catch (error:any) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ 
+            error: error.message,
+            message:"Server error"
+        });
     }
 };
 
@@ -42,7 +60,10 @@ const singleBlog = async (req: Request, res: Response ) => {
             res.status(404).json({ error: "Blog doesn't exist!" });
             return;
         }
-        res.status(200).json(blog);
+        res.status(200).json({
+            blog:blog,
+            message:"single blog returned"
+            });
     } catch(error:any) {
         res.status(500).json({ error: "Internal Server Error" });
     }
@@ -59,7 +80,9 @@ const updateBlog = async (req: Request, res: Response ) => {
             res.status(404).json({ error: "Blog doesn't exist!" });
             return;
         }
-        res.status(200).json(blog);
+        res.status(200).json({
+            blog:blog
+        });
     } catch (error:any) {
         res.status(400).json({ error: error.message });
     }

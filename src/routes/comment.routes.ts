@@ -1,10 +1,11 @@
 import  express from "express";
+import { isUSerLoggedIn } from "../middlewares/authorization";
 
 const comRouter=express.Router();
 
 import commentController from "../controllers/comment.controller";
 
-comRouter.post("/:id/comments",commentController.newComment)
+comRouter.post("/:id/comments",isUSerLoggedIn,commentController.newComment)
 
 //getAllComment on blog
 comRouter.get("/:id/comments",commentController.getAllComment)

@@ -19,6 +19,7 @@ const GetAllblog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const blogs = yield blogSchem_1.default.find();
         return res.status(200).json({
             status: 200,
+            message: "success",
             blog: blogs
         });
     }
@@ -29,17 +30,31 @@ const GetAllblog = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 //Create Blog
 const newBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const blog = new blogSchem_1.default({
-        title: req.body.title,
-        summary: req.body.summary,
-        description: req.body.description,
-    });
     try {
+        const blog = new blogSchem_1.default({
+            title: req.body.title,
+            summary: req.body.summary,
+            description: req.body.description,
+        });
+        const existingTitle = yield blogSchem_1.default.findOne({ title: req.body.title });
+        if (existingTitle) {
+            return res.status(400).json({
+                status: 400,
+                message: "Title has been used"
+            });
+        }
         yield blog.save();
-        res.status(201).json(blog);
+        return res.status(201).json({
+            status: 201,
+            message: "Blog created successfully",
+            blog: blog
+        });
     }
     catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({
+            error: error.message,
+            message: "Server error"
+        });
     }
 });
 const singleBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

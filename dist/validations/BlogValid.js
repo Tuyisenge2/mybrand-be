@@ -12,5 +12,4 @@ const BlogScheme = joi_1.default.object({
 const validateBlog = (blog) => {
     return BlogScheme.validate(blog);
 };
-//module.exports = validateBlog;
 exports.default = validateBlog;

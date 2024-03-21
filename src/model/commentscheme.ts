@@ -5,12 +5,12 @@ const schema = mongoose.Schema;
 const commentScheme = new schema(
   {
     User:{
-      type:String,
-      required:true,    
+      type:String
+         
     },
     comment: {
-      type: String,
-      required: true,
+      type: String
+      
     },
      blogId : {
       type: mongoose.Types.ObjectId,

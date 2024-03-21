@@ -6,7 +6,7 @@ const userRout= Express.Router();
 
 
 userRout.post("/signup",isValid,addUser.addUser);
-userRout.get("/login",addUser.loginUser);
+userRout.post("/login",addUser.loginUser);
 
 
 export  default userRout;

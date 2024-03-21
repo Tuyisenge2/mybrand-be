@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 //const app=require("./app.js");
 const app_1 = __importDefault(require("./app"));
-const mongodb_1 = __importDefault(require("./services/mongodb"));
+const mongodb_1 = require("./services/mongodb");
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongodb_1.default.mongoConnect();
+    yield (0, mongodb_1.testConnect)();
     app_1.default.listen(5000, () => {
         console.log('server is listening ..... 5000');
     });

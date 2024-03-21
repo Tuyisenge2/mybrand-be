@@ -29,7 +29,7 @@ const comment=new Comment({
 });
 const com = await comment.save();
 console.log(com.comment);
- blog.commentArray.push(com.comment);
+ blog.commentArray.push(com.comment as string);
 
  await blog.save();
 
@@ -41,7 +41,6 @@ return res.status(201).json({
     status:"Success",
     message:"Comment added successfully",
     comment:com
-     ,blog:blog
 })
 
 }catch(Error){

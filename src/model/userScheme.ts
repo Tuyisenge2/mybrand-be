@@ -1,3 +1,4 @@
+import { string } from "joi";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -26,6 +27,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['male', 'female', 'other'],
         required: true
+    },
+    Role:{
+        type:String,
+        default:'Client',
     }
 });
 

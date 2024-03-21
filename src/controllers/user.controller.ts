@@ -7,13 +7,15 @@ import { Request, Response } from "express";
 
 
 // Controller function to add a new user
+
  const addUser = async (req:Request, res:Response) => {
     try {
-    const { firstname, lastname, email, password, dateOfBirth, gender } = req.body;
+    const { firstname, lastname, email, password, dateOfBirth, gender,Role } = req.body;
 
         const existingUser = await userScheme.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ message: 'Email is already registered' });
+            return res.status(400).
+            json({ message: 'Email is already registered' });
         }
         const salt=await bcrypt.genSalt(10)
 const hashedPass=await  bcrypt.hash(password,salt);
@@ -23,17 +25,23 @@ const hashedPass=await  bcrypt.hash(password,salt);
             email,
             password:hashedPass, 
             dateOfBirth,
-            gender
+            gender,
+            Role
         });
   console.log(hashedPass)
         await newUser.save();
 
-        res.status(201).json({ message: 'User created successfully',
+       return res.status(201).json({ 
+            message: 'User created successfully',
+            username:newUser,
           });
 
     } catch (error) {
         console.error('Error adding user:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ 
+            message: 'Internal server error' 
+    
+    });
     }
 };
 
@@ -45,19 +53,21 @@ const hashedPass=await  bcrypt.hash(password,salt);
         const { email, password } = req.body;
 
         const user = await userScheme.findOne({ email });
-
-        if (!user) {
-            return res.status(404).json({
-                 message: 'User not found' 
-                });
+   
+        //!user||user.password===null||user.password===undefined
+         
+        if(password===null||password===undefined||email===null||email===undefined)
+        {  
+             return res.status(400).json({
+                message:"an empty filled to fill "
+            })
         }
-if(!user||user.password===null||user.password===undefined)
-{   console.log("password is ", password, " and user was ",user)
-     return res.status(404).json({
-        message:"an empty filled to fill "
-    })
-}
 
+      if(user?.password===null||user?.password===undefined) {
+    return res.status(404).json({
+         message: 'User not found' 
+        });
+}
 
 const existingToken = req.headers.authorization;
 
@@ -83,7 +93,7 @@ const isPasswordValid = await bcrypt.compare(password, user.password);
             return res.status(401).json({ message: 'Invalid password' });
         }
 
-        const token = await jwt.sign({ id: user._id }, 'eonfeinefiueriu', { expiresIn: '2min' });
+        const token = await jwt.sign({ id: user._id,Role:user.Role }, 'eonfeinefiueriu', { expiresIn: '30min' });
    
         if (!token) {
             throw new Error('Failed to generate token');

@@ -2,6 +2,10 @@
 
 import mongoose from "mongoose";
 
+    
+mongoose.connection.on('error', (err) => {
+  console.error('Database connection error:', err);
+});
 
     mongoose.connection.on('open', () => {
         console.info('Database connected');
@@ -11,19 +15,56 @@ import mongoose from "mongoose";
         console.info('something went wrong');
       });
       
-      const mongoConnect = async () => {
-        await mongoose.connect('mongodb+srv://tuyisengetito3:h6uClMgz6FiBszui@cluster0.wk1xsou.mongodb.net/');
-      };
-      const mongoDisconnect = async () => {
-        await mongoose.disconnect();
-      };
       
-      // module.exports = {
-      //   mongoConnect,
-      //   mongoDisconnect,
-      // };
+      //  mongodb://localhost:27017/myBlogs
+//  mongodb+srv://tuyisengetito3:h6uClMgz6FiBszui@cluster0.wk1xsou.mongodb.net/
 
-      export default {
+      const mongoConnect = async () => {
+
+
+        try {
+          await mongoose.connect('mongodb://localhost:27017/myBlogs')
+          console.log("myblogs test is connected");
+      } catch (error) {
+          console.error('Error connecting to MongoDB:', error);
+         
+      }
+
+
+      };
+
+      const mongoDisconnect = async () => {
+        try {
+            await mongoose.disconnect();
+            console.log("Disconnected myBlogs from MongoDB");
+        } catch (error) {
+            console.error('Error disconnecting from MongoDB:', error);
+        }
+    };
+    
+    const testConnect = async () => {
+        try {
+            await mongoose.connect('mongodb://localhost:27017/testingDb');
+  
+        } catch (error) {
+            console.error('Error connecting to test MongoDB:', error);
+          
+        }
+    };
+    
+    const testDisconnect = async () => {
+        try {
+            await mongoose.disconnect();
+            console.log("Disconnected test from test MongoDB");
+        } catch (error) {
+            console.error('Error disconnecting from test MongoDB:', error);
+         
+        }
+    };
+    
+    export {
         mongoConnect,
         mongoDisconnect,
-      };
+        testConnect,
+        testDisconnect
+    };

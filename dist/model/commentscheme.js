@@ -7,12 +7,10 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const schema = mongoose_1.default.Schema;
 const commentScheme = new schema({
     User: {
-        type: String,
-        required: true,
+        type: String
     },
     comment: {
-        type: String,
-        required: true,
+        type: String
     },
     blogId: {
         type: mongoose_1.default.Types.ObjectId,

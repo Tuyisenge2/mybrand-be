@@ -8,7 +8,8 @@ const Signupvalid = Joi.object({
             .message('Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one number')
             .required(),
     dateOfBirth: Joi.string().required(),
-    gender: Joi.string().valid('male', 'female', 'other').required()
+    gender: Joi.string().valid('male', 'female', 'other').required(),
+    Role:Joi.string()
 });
 
 const validateSignup = (user:any) => {

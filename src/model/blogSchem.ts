@@ -1,8 +1,11 @@
   import mongoose from "mongoose";
     
     const schema = new mongoose.Schema({
-        title: String,
-        summary:String,
+        title: {
+          type:String,
+          unique: true
+        },
+            summary:String,
         description: String,
         commentArray: {
           type:[String]

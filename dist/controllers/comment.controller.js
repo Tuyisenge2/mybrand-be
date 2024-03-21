@@ -45,8 +45,7 @@ const newComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res.status(201).json({
             status: "Success",
             message: "Comment added successfully",
-            comment: com,
-            blog: blog
+            comment: com
         });
     }
     catch (Error) {

@@ -20,6 +20,7 @@ const blogSchem_1 = __importDefault(require("../model/blogSchem"));
 const createBlogLike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blogid = req.params.id;
+        const existingLike = yield Bloglike_1.default.findById(blogid);
         if (!mongoose_1.default.Types.ObjectId.isValid(blogid)) {
             return res.status(400).json({ message: "Invalid blog ID" });
         }

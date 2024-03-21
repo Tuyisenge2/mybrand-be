@@ -1,16 +1,20 @@
 //const express = require("express")
 import express from 'express';
+import authUser from "../permissiions/authUser";
+
+import { checkAdmin } from '../middlewares/authorization';
+
 const router = express.Router();
  import blogCont from "../controllers/Blog.controllers";  
 
-import isValid from "../middlewares/blog.middeware";
- 
+import { isTitleUsed,isValid } from '../middlewares/blog.middeware';
+
     // Get all posts
     router.get("/", blogCont.GetAllblog )
 
     //create new Blog
 
-    router.post("/",isValid,blogCont.newBlog)
+    router.post("/",checkAdmin,isTitleUsed,isValid,blogCont.newBlog)
     
 //     // Get individual blog
 
@@ -19,12 +23,12 @@ import isValid from "../middlewares/blog.middeware";
 
 // // update Blog
 
-router.patch("/:id",blogCont.updateBlog  )
+router.patch("/:id",checkAdmin,blogCont.updateBlog)
 
 // // delete Blog 
 
 
-router.delete("/:id",blogCont.deleteBlog)
+router.delete("/:id",checkAdmin,blogCont.deleteBlog)
 
     //module.exports = router
 

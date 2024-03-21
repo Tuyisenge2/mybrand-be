@@ -10,6 +10,5 @@ const validateBlog = (blog:string) => {
   return BlogScheme.validate(blog);
  };
 
-//module.exports = validateBlog;
 
 export default validateBlog;

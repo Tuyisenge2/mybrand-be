@@ -9,7 +9,7 @@ import blogLikeScheme from "../model/Bloglike";
 const createBlogLike = async (req:Request, res:Response) => {
     try {
         const blogid = req.params.id;
-
+      const existingLike= await blogLikeScheme.findById(blogid);
         if (!mongoose.Types.ObjectId.isValid(blogid)) {
             return res.status(400).json({ message: "Invalid blog ID" });
         }
