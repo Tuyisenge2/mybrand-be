@@ -8,7 +8,6 @@ const checkAdmin=async(req:Request,res:Response,next:Function)=>{
     try {
         let token = req.headers.authorization;
     
-    
         if (!token) {
             return res.status(401).json({
                 message: "You must log in."

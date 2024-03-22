@@ -54,6 +54,8 @@ const hashedPass=await  bcrypt.hash(password,salt);
     try {
         const { email, password } = req.body;
 
+        
+
         const user = await userScheme.findOne({ email });
    
         //!user||user.password===null||user.password===undefined

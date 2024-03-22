@@ -14,7 +14,7 @@ import fs from "fs";
 import { string } from 'joi';
 
 let token:string;
-let id:mongoose.Types.ObjectId;
+let id:string;
 
 describe('Blogs Api', () => {
   beforeAll(async () => {
@@ -54,7 +54,7 @@ test('It should return 200 and list of all Blogs', async () => {
     });
     describe("login user" ,()=>{
       beforeEach(()=>{
-        token =  jwt.sign({ id: userTocreateBlogToken._id,Role:userTocreateBlogToken.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
+       // token =  jwt.sign({ id: userTocreateBlogToken._id,Role:userTocreateBlogToken.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
       })
 
     test('It should return signup and login', async () => {
@@ -68,21 +68,30 @@ test('It should return 200 and list of all Blogs', async () => {
         .send(userTocreateBlogLogin)
         .expect(200);
         expect(responseLogin.body.token).toBeDefined() 
-  
+
+  token=responseLogin.body.token;
+console.log(token);
   });
 })
 
 describe("login user" ,()=>{
   let existingBlog:any;
+  let newBlog:any;
   beforeEach(async()=>{
-    existingBlog = new blogSchem({
-      title: "Example Blog",
+    // existingBlog = new blogSchem({
+    //   title: "Exanisbsiu Blog",
+    //   description: "This is an example blog",
+    //   summary: "summary of update",
+    //   blogImage: "test.jpg"
+    // });
+    // await existingBlog.save();
+    //token =  jwt.sign({ id: userTocreateBlogToken._id,Role:userTocreateBlogToken.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
+    newBlog={
+      title: "new Blog",
       description: "This is an example blog",
       summary: "summary of update",
-      blogImage: "test.jpeg"
-    });
-    await existingBlog.save();
-    token =  jwt.sign({ id: userTocreateBlogToken._id,Role:userTocreateBlogToken.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
+      blogImage: "test.jpg"
+    }
   })
 
   test("it should return 201 and blog created",async()=>{
@@ -97,13 +106,23 @@ describe("login user" ,()=>{
    .field("title",BlogData.title as string)
    .field("summary",BlogData.summary as string)
    .field("description",BlogData.description as string)
-     .attach("blogImage",filePath as string)
+   .attach("blogImage",filePath as string)
    .expect(201)
+   id=response.body.blog._id;
  
 })
 
+test("it should return 404 and blog doesn't exist",async()=>{
+  const response = await request(app)
+  .get(`/api/blogs/${unexistingBlog}`)
+   .expect(404)
+      })
+
+
 test("it should return 200 and update blog",async()=>{
 
+
+  console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqq",token)
   const updateData = {
     title: "Updated Title",
     description: "Updated Description",
@@ -116,18 +135,20 @@ test("it should return 200 and update blog",async()=>{
  }
 
  const response = await request(app)
-    .patch(`/api/blogs/${existingBlog._id}`)
+    .patch(`/api/blogs/${id}`)
     .set("Authorization", `${token}`)
-    .field("title", updateData.title)
-    .field("description", updateData.description)
-    .field("summary", updateData.summary)
+    .field("title", newBlog.title)
+    .field("description", newBlog.description)
+    .field("summary", newBlog.summary)
     .attach("blogImage", filePath)
     .expect(200)
-
-
 })
+
+
   
+
 })
+
 
 
   
