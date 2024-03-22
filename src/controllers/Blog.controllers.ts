@@ -1,6 +1,6 @@
 import Blog from  "../model/blogSchem";
 import Express, { Request, Response } from 'express';
-
+import { UploadToCloud } from "../Helper/cloud";
 
 //Get all BLog
   const GetAllblog =  async ( req: Request, res: Response ) => {
@@ -20,10 +20,21 @@ import Express, { Request, Response } from 'express';
   
 //Create Blog
 const newBlog = async (req: Request, res: Response ) => {
+    if (!req.file) {
+        return res.status(400).json({
+          message: "Please upload a file",
+        });
+      }
+    
     try {
+
+        const result = await UploadToCloud(req.file, res);
+
+
     const blog = new Blog({
         title: req.body.title,
         summary: req.body.summary,
+        blogImage: (result as any).secure_url,
         description: req.body.description,
     });
 
@@ -45,7 +56,10 @@ return  res.status(201).json({
     blog:blog
 
 });
-    } catch (error:any) {
+    } 
+    
+    catch (error:any) {
+        
         res.status(500).json({ 
             error: error.message,
             message:"Server error"

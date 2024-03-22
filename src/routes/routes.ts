@@ -1,7 +1,8 @@
 //const express = require("express")
 import express from 'express';
 import authUser from "../permissiions/authUser";
-
+import { Multer } from 'multer';
+import upload from '../Helper/multer';
 import { checkAdmin } from '../middlewares/authorization';
 
 const router = express.Router();
@@ -14,8 +15,8 @@ import { isTitleUsed,isValid } from '../middlewares/blog.middeware';
 
     //create new Blog
 
-    router.post("/",checkAdmin,isTitleUsed,isValid,blogCont.newBlog)
-    
+    router.post("/",upload.single('blogImage'),checkAdmin,isTitleUsed,isValid,blogCont.newBlog)
+    //,
 //     // Get individual blog
 
       

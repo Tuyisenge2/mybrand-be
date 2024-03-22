@@ -7,6 +7,7 @@
         },
             summary:String,
         description: String,
+        blogImage:String,
         commentArray: {
           type:[String]
         },
