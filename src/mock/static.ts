@@ -1,6 +1,6 @@
 
 import mongoose from "mongoose"
-
+import userScheme from "../model/userScheme"
 export const blogStatic = {
     title:"Blog 1",
     summary:"Summatization",
@@ -20,7 +20,7 @@ export const blogStatic = {
           email:"user email",
           message:"message"
           }
- export const userDataSignUp = {
+ export const userDataSignUpgenerate =new userScheme({
 firstname: "boy",
 lastname: "Admine54",
 email: "smallhjhboj1@gmail.com",
@@ -28,8 +28,27 @@ password:"123ABCDEFg",
 dateOfBirth: "2003",
 gender: "other",
 Role:"Admin"
+ });
+ 
+export const userDataSignUp ={
+  firstname: "boy",
+  lastname: "Admine54",
+  email: "smallhjhboj1@gmail.com",
+  password:"123ABCDEFg",
+  dateOfBirth: "2003",
+  gender: "other",
+  Role:"Admin"
+  };
+
+
+
+export const userDataLogin = {
+  email: "smallhjhboj1@gmail.com",
+password:"123ABCDEFg"
 }
-     export const userTocreateBlog={
+
+
+export const userTocreateBlog={
 
       firstname: "boydf",
       lastname: "AdmdinJe54",
@@ -69,10 +88,6 @@ export const userTocommentBlog={
 
 //
 
- export const userDataLogin = {
-  email: "smallhjhboj1@gmail.com",
-password:"123ABCDEFg"
-}
 
 
 

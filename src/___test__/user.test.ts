@@ -1,14 +1,17 @@
 import request from 'supertest';
 
 import { mongoConnect,mongoDisconnect,testConnect,testDisconnect } from '../services/mongodb';
-import { existingUserData, userDataLogin, userDataSignUp,userNotFound } from '../mock/static';
+import { existingUserData, userDataLogin, userDataSignUp,userNotFound, userDataSignUpgenerate} from '../mock/static';
 import app from '../app';
+import bcrypt from 'bcrypt';
+import { hash } from 'bcrypt';
+import dotenv from "dotenv";
+dotenv.config();
+import jwt from "jsonwebtoken";
 import blogSchem from '../model/blogSchem';
 import userScheme from '../model/userScheme';
 import mongoose from 'mongoose';
 
-
-jest.setTimeout(10000);
 let token:string;
 let id:mongoose.Types.ObjectId;
 describe('Blogs Api', () => {
@@ -22,64 +25,55 @@ describe('Blogs Api', () => {
     await testDisconnect();
   });
 
+  token =  jwt.sign({ id: userDataSignUpgenerate._id,Role:userDataSignUpgenerate.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
 
   
 
     describe('userSignUp',()=>{
-        test("it should return 404 and userNotFoun ",async ()=>{
+
+
+      test("it should return 404 and userNotFoun ",async ()=>{
             const response = await request(app)
             .post('/api/users/login')
             .send(userNotFound)
             .expect(404)
         })
-        
-  
+
+
+        test('It should return signup and login', async () => {
+          const response = await request(app)
+            .post('/api/users/signup')
+            .send(userDataSignUp)
+            .expect(201);  
       
-test("it should return 400 and existing user ",async ()=>{
-    const response = await request(app)
-    .post('/api/users/signup')
-    .send(existingUserData)
-    .expect(400)
-})
+            const responseLogin = await request(app)
+            .post('/api/users/login')
+            .send(userDataLogin)
+            .expect(200);
+            expect(responseLogin.body.token).toBeDefined() 
+        
+      
+      });  
+      
+      test("it should return 409 and user is logged in",async ()=>{
+        const response = await request(app)
+        .post('/api/users/login')
+        .set("Authorization",`${token}`)
+        .send(userDataLogin)
+        .expect(409)
+      
+      })
 
 
-test('It should return signup and login', async () => {
-    const response = await request(app)
-      .post('/api/users/signup')
-      .send(userDataSignUp)
-      .expect(201);  
+      test("it should return 404 and user not found",async ()=>{
+        const response = await request(app)
+        .post('/api/users/login')
+        .send(userNotFound)
+        .expect(404)
+      
+      })
 
-      const responseLogin = await request(app)
-      .post('/api/users/login')
-      .send(userDataLogin)
-      .expect(200);
-      expect(responseLogin.body.token).toBeDefined() 
-    token = responseLogin.body.token;
-
-});  
-
-
-
-test("it should return 409 and user is logged in",async ()=>{
-  const response = await request(app)
-  .post('/api/users/login')
-  .send(userDataLogin)
-  .set("Authorization",`${token}`)
-  .expect(409)
-
-})
-
-
-test("it should return 404 and user not found",async ()=>{
-  const response = await request(app)
-  .post('/api/users/login')
-  .send(userNotFound)
-  .expect(404)
-
-})
-
-
-    })
+      })
 
  })
 

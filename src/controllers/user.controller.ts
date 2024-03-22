@@ -2,6 +2,8 @@ import userScheme from "../model/userScheme";
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
 import { hash } from 'bcrypt';
+import dotenv from "dotenv";
+dotenv.config();
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 
@@ -93,7 +95,7 @@ const isPasswordValid = await bcrypt.compare(password, user.password);
             return res.status(401).json({ message: 'Invalid password' });
         }
 
-        const token = await jwt.sign({ id: user._id,Role:user.Role }, 'eonfeinefiueriu', { expiresIn: '30min' });
+        const token =  jwt.sign({ id: user._id,Role:user.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
    
         if (!token) {
             throw new Error('Failed to generate token');

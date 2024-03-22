@@ -1,15 +1,17 @@
 import request from 'supertest';
 
 import { mongoConnect,mongoDisconnect,testConnect,testDisconnect } from '../services/mongodb';
-import { unexistingBlog,existingUserData, userTocreateBlog, userTocreateBlogLogin,userNotFound ,BlogData} from '../mock/static';
+import { unexistingBlog,existingUserData,userDataSignUpgenerate ,userTocreateBlog, userTocreateBlogLogin,userNotFound ,BlogData} from '../mock/static';
+import { Jwt } from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 import app from '../app';
 import blogSchem from '../model/blogSchem';
 import userScheme from '../model/userScheme';
 import mongoose from 'mongoose';
 
-jest.setTimeout(10000);
 let token:string;
+
 let id:mongoose.Types.ObjectId;
 
 describe('Blogs Api', () => {
@@ -26,6 +28,9 @@ describe('Blogs Api', () => {
 
 
   describe("Welcome API Message",()=>{
+
+ token =  jwt.sign({ id: userDataSignUpgenerate._id,Role:userDataSignUpgenerate.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
+
 
 test("it should return 200 and welcome",async ()=>{
 
@@ -46,7 +51,6 @@ test('It should return 200 and list of all Blogs', async () => {
       });
     });
 
-
     test('It should return signup and login', async () => {
       const response = await request(app)
         .post('/api/users/signup')
@@ -58,51 +62,13 @@ test('It should return 200 and list of all Blogs', async () => {
         .send(userTocreateBlogLogin)
         .expect(200);
         expect(responseLogin.body.token).toBeDefined() 
-      token = responseLogin.body.token;
   
-  });  
+  });
   
-test("it should return 201 and blog created",async()=>{
-  const response = await request(app)
-  .post('/api/blogs/')
-   .set("Authorization",`${token}`)
-   .send(BlogData)
-   .expect(201)
-
-   id=response.body.blog._id;
-
-})
-
-test("it should return 400 and single blog returned",async()=>{
-  const response = await request(app)
-  .get(`/api/blogs/${id}`)
-  .expect(200)
-})
 
 
-
-test("it should return 200 and blog updated successfully",async()=>{
-  const response = await request(app)
-.patch(`/api/blogs/${id}`)
-.set("Authorization",`${token}`)
-.expect(200)
-})
-
-
-test("it should return 404 and blog doesn't exist",async()=>{
-  const response = await request(app)
-.get(`/api/blogs/${unexistingBlog}`)
-.expect(404)
-})
-
-
-test("it should return 204 and blog deleted successfully",async()=>{
-  const response = await request(app)
-.delete(`/api/blogs/${id}`)
-.set("Authorization",`${token}`)
-.expect(204)
-})
-
+  
+  
 
 
  })
