@@ -3,7 +3,7 @@ import app from './app'
 import {mongoConnect,testConnect } from './services/mongodb';
 
 const startServer = async () => {
-  await testConnect();
+  await mongoConnect();
 
   app.listen(5000, () => {
     console.log('server is listening ..... 5000');

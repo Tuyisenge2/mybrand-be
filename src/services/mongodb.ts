@@ -23,7 +23,7 @@ mongoose.connection.on('error', (err) => {
 
 
         try {
-          await mongoose.connect('mongodb://localhost:27017/myBlogs')
+          await mongoose.connect('mongodb+srv://tuyisengetito3:h6uClMgz6FiBszui@cluster0.wk1xsou.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
           console.log("myblogs test is connected");
       } catch (error) {
           console.error('Error connecting to MongoDB:', error);

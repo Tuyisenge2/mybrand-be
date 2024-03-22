@@ -73,7 +73,15 @@ test('It should return 200 and list of all Blogs', async () => {
 })
 
 describe("login user" ,()=>{
+  let existingBlog:any;
   beforeEach(async()=>{
+    existingBlog = new blogSchem({
+      title: "Example Blog",
+      description: "This is an example blog",
+      summary: "summary of update",
+      blogImage: "test.jpeg"
+    });
+    await existingBlog.save();
     token =  jwt.sign({ id: userTocreateBlogToken._id,Role:userTocreateBlogToken.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
   })
 
@@ -108,7 +116,7 @@ test("it should return 200 and update blog",async()=>{
  }
 
  const response = await request(app)
-    .patch(`/api/blogs/${BlogData._id}`)
+    .patch(`/api/blogs/${existingBlog._id}`)
     .set("Authorization", `${token}`)
     .field("title", updateData.title)
     .field("description", updateData.description)
