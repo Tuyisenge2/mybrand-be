@@ -15,8 +15,8 @@ import { isTitleUsed,isValid } from '../middlewares/blog.middeware';
 
     //create new Blog
 
-    router.post("/",upload.single('blogImage'),checkAdmin,isTitleUsed,isValid,blogCont.newBlog)
-    //,
+    router.post("/",upload.single('blogImage'),blogCont.newBlog)
+    //,checkAdmin,isTitleUsed,isValid,
 //     // Get individual blog
 
       
