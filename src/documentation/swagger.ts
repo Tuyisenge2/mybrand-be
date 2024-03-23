@@ -4,14 +4,14 @@ const apiDoc = {
   info: {
     title: "MY BRAND API DOCUMENTATION",
     description: "Documentation for the Express API endpoints",
-    version: "1.0.0",
+    version: "1.0.0"
   },
   servers: [
     {
-      url: "https://my-express-app-yzv8.onrender.com",
+      url: "http://localhost:5000/api",
     },
   ],
-  paths: {},
+  paths: { },
   components: {
     securitySchemes: {
       bearerAuth: {
@@ -22,7 +22,7 @@ const apiDoc = {
   },
 };
 const outputFilePath = "./swagger_output.json";
-const endpointsFilePaths = ["../index.ts"];
+const endpointsFilePaths = ["../routes/index.ts"];
 swaggerAutogen({ openapi: "3.0.0" })(
   outputFilePath,
   endpointsFilePaths,

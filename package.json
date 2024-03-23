@@ -8,7 +8,8 @@
     "dev": "ts-node-dev src/index.ts",
     "test": "jest --no-cache --detectOpenHandles",
     "test-test": "jest --watchAll --no-cache --detectOpenHandles",
-    "test:ci": "jest --detectOpenHandles --coverage"
+    "test:ci": "jest --detectOpenHandles --coverage",
+    "prepublish": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -30,8 +31,9 @@
     "path": "^0.12.7",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.0",
-    "ts-node": "^10.9.2"
-  },
+    "ts-node": "^10.9.2",
+    "@types/express": "^4.17.17"
+      },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"

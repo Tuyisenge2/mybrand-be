@@ -34,8 +34,7 @@ const hashedPass=await  bcrypt.hash(password,salt);
         await newUser.save();
 
        return res.status(201).json({ 
-            message: 'User created successfully',
-            username:newUser,
+            message: 'User created successfully'
           });
 
     } catch (error) {

@@ -85,9 +85,14 @@ const singleBlog = async (req: Request, res: Response ) => {
 
 const updateBlog = async (req: Request, res: Response ) => {
     try {
+
+        
+
         const blog = await Blog.findByIdAndUpdate(req.params.id, {
-            title: req.body.title,
-            content: req.body.content,
+             title: req.body.title,
+        summary: req.body.summary,
+        description: req.body.description
+        
         }, { new: true });
 
         if (!blog) {
@@ -109,7 +114,9 @@ const deleteBlog = async (req: Request, res: Response ) => {
             res.status(404).json({ error: "Blog doesn't exist!" });
             return;
         }
-        res.status(204).json();
+       return res.status(204).json({
+        message:"blog deleted succeffully"
+       });
     } catch(error:any) {
         res.status(500).json({ error: "Internal Server Error" });
     }
