@@ -146,7 +146,13 @@ test("it should return 200 and update blog",async()=>{
 })
 
 
-
+test("it should return 204 and blog deleted successfully",async()=>{
+  const response = await request(app)
+.delete(`/api/blogs/${id}`)
+.set("Authorization",`${token}`)
+.expect(204)
+})
+  
 
 })
 
