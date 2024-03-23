@@ -35,6 +35,9 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
+  }, "transform": {
+    "^.+\\.(ts|tsx)?$": "ts-jest",
+    "^.+\\.(js|jsx)$": "babel-jest"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
