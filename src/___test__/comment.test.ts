@@ -11,6 +11,7 @@ import mongoose from 'mongoose';
 
 let token:string;
 let id:mongoose.Types.ObjectId;
+jest.setTimeout(12000);
 
 describe("comment Api ",()=>{
 

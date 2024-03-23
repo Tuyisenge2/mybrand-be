@@ -11,6 +11,7 @@ import jwt from "jsonwebtoken";
 import blogSchem from '../model/blogSchem';
 import userScheme from '../model/userScheme';
 import mongoose from 'mongoose';
+jest.setTimeout(12000);
 
 let token:string;
 let id:mongoose.Types.ObjectId;

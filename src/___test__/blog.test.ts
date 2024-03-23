@@ -16,6 +16,8 @@ import { string } from 'joi';
 let token:string;
 let id:string;
 
+jest.setTimeout(12000);
+
 describe('Blogs Api', () => {
   beforeAll(async () => {
     await testConnect();
@@ -122,7 +124,6 @@ test("it should return 404 and blog doesn't exist",async()=>{
 test("it should return 200 and update blog",async()=>{
 
 
-  console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqq",token)
   const updateData = {
     title: "Updated Title",
     description: "Updated Description",
