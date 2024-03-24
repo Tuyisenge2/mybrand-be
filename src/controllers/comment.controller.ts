@@ -2,17 +2,32 @@ import Comment from  "../model/commentscheme";
 import  { Request, Response } from 'express';
 import blogSchem from "../model/blogSchem";
 import mongoose  from "mongoose";
+import userScheme from "../model/userScheme";
+
+import Jwt, { JwtPayload } from "jsonwebtoken";
+
 
 //create comment 
 
 const newComment= async (req:Request , res:Response )=>{
 try{
+// find user who comment
 
+
+let token;        
+  if(req.headers.authorization){
+   token=req.headers.authorization;
+        }
+const decoded=Jwt.verify(String(token),"eonfeinefiueriu") as any;
+          
+const loggedUser= await userScheme.findById(decoded.id);
+
+
+//end  of searching user
     const Id =  req.params.id;
-    console.log(Id);
     if(!mongoose.Types.ObjectId.isValid(Id)){
     return res.status(400).json({
-        message:"No Id found in our database"
+        message:"invalid id"
     })
     }
 
@@ -23,14 +38,19 @@ if (!blog) {
     });
 }
 const comment=new Comment({
-    User:req.body. User,
+    User:loggedUser?._id,
     comment:req.body.comment,
-    blogId:Id,
+    blogId:Id
 });
 const com = await comment.save();
 console.log(com.comment);
- blog.commentArray.push(com.comment as string);
-
+const userAndComment={
+   User:com.User,
+   comments:com.comment
+};
+if(userAndComment){
+ blog.commentArray.push(userAndComment);
+}
  await blog.save();
 
 console.log(blog)

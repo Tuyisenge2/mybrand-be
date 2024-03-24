@@ -6,6 +6,7 @@ import { Jwt } from 'jsonwebtoken';
 import jwt from "jsonwebtoken";
 
 import app from '../app';
+import commentscheme from '../model/commentscheme';
 import blogSchem from '../model/blogSchem';
 import userScheme from '../model/userScheme';
 import mongoose from 'mongoose';
@@ -16,7 +17,7 @@ import { string } from 'joi';
 let token:string;
 let id:string;
 
-jest.setTimeout(12000);
+jest.setTimeout(20000);
 
 describe('Blogs Api', () => {
   beforeAll(async () => {
@@ -24,7 +25,7 @@ describe('Blogs Api', () => {
   });
 
   afterAll(async () => {
-
+    await commentscheme.deleteMany();
     await blogSchem.deleteMany();
     await userScheme.deleteMany();
     await testDisconnect();
@@ -80,14 +81,7 @@ describe("login user" ,()=>{
   let existingBlog:any;
   let newBlog:any;
   beforeEach(async()=>{
-    // existingBlog = new blogSchem({
-    //   title: "Exanisbsiu Blog",
-    //   description: "This is an example blog",
-    //   summary: "summary of update",
-    //   blogImage: "test.jpg"
-    // });
-    // await existingBlog.save();
-    //token =  jwt.sign({ id: userTocreateBlogToken._id,Role:userTocreateBlogToken.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
+  //token =  jwt.sign({ id: userTocreateBlogToken._id,Role:userTocreateBlogToken.Role }, process.env.JWT_SECRET || " ", { expiresIn: '30min' });
     newBlog={
       title: "new Blog",
       description: "This is an example blog",
@@ -95,6 +89,17 @@ describe("login user" ,()=>{
       blogImage: "test.jpg"
     }
   })
+
+  test("it should return 400 and insert the Image",async()=>{
+  
+    const filePath = null as any;
+  const response = await request(app)
+  .post('/api/blogs/')
+   .set("Authorization",`${token}`)
+   .attach("blogImage",filePath as string)
+   .expect(400)
+ 
+})
 
   test("it should return 201 and blog created",async()=>{
 

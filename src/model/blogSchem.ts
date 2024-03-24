@@ -9,7 +9,7 @@
         description: String,
         blogImage:String,
         commentArray: {
-          type:[String]
+          type:[]
         },
         likesArray: {
           type: [String]  

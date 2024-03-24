@@ -5,7 +5,8 @@ const schema = mongoose.Schema;
 const commentScheme = new schema(
   {
     User:{
-      type:String
+      type:String,
+       ref:"User"  
          
     },
     comment: {

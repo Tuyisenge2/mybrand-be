@@ -47,10 +47,9 @@ const isUSerLoggedIn=async(req:Request,res:Response,next:Function)=>{
         try{
 
  let token;        
-  if(req.headers.authorization &&req.headers.authorization.startsWith("Bearer")){
-   token=req.headers.authorization.split(" ")[1];
-        
-          }
+  if(req.headers.authorization){
+   token=req.headers.authorization;
+        }
         
             if(!token){
                return res.status(401).json({
@@ -61,20 +60,15 @@ const isUSerLoggedIn=async(req:Request,res:Response,next:Function)=>{
                  
           const decoded=Jwt.verify(String(token),"eonfeinefiueriu") as any;
           
-          const loggedUser= await userScheme.findById(decoded._id);
-          
+          const loggedUser= await userScheme.findById(decoded.id);
+             console.log(decoded);         
           if(!loggedUser){
            return res.status(409).json({
                 message:"user not found"
+ 
             })
-        }
-        if(loggedUser.Role =="Admin")
-        {
+        } 
         next();
-        
-        }  
-
-
 
     }catch (error){
         return res.status(400).json(
