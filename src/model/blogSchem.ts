@@ -1,7 +1,7 @@
   import mongoose from "mongoose";
     
     const schema = new mongoose.Schema({
-        title: {
+        title:{
           type:String,
           unique: true
         },
@@ -12,7 +12,7 @@
           type:[]
         },
         likesArray: {
-          type: [String]  
+          type: []  
       }
     })
     

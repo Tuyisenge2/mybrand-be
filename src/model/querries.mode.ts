@@ -4,7 +4,8 @@ const schema = mongoose.Schema;
 
 const querriesScheme = new schema(
   {
-    email:{type:String,
+    email:{
+      type:String,
       required:true,    
     },
     message: {

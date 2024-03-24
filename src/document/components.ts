@@ -55,8 +55,75 @@ export default {
             }
           },
         },
+        BlogScheme:{
+          type: "object",
+          properties:{
+            title:{
+              type:String,
+              unique: true
+            },
+            summary:{
+              type:"string",
+              description:"summary"
+            },
+            description: {
+              type:"string",
+            description:"descrption"
+            },
+            blogImage:{
+              type:"string",
+            description:"ImageUrl"
+            },
+            commentArray: {
+              type:[]
+            },
+            likesArray: {
+              type: []  
+          }
 
-        Error: {
+          }
+        },
+          CommentScheme:{
+            type: "object",
+            properties:{
+            User:{
+              type:"string",
+               ref:"User"  
+                 
+            },
+            comment: {
+              type: "string"
+              
+            },
+             blogId : {
+              type:"string",
+              ref:"Blog"
+            }
+          }
+          },
+          QuerriesScheme:{
+            type: "object",
+          properties:{
+            email:{
+              type:"string"
+            },
+            message: {
+              type: "string"
+            },
+          }
+          },
+   BlogLikesScheme:{
+    type: "object",
+    properties:{
+      blogId: {
+        type: "string",
+        ref:"Blog"
+      }
+
+    }
+
+   }
+   ,       Error: {
           type: "object",
           properties: {
             message: {

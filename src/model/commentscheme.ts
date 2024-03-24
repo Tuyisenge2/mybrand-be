@@ -1,3 +1,4 @@
+import { string } from "joi";
 import mongoose from "mongoose";
 
 const schema = mongoose.Schema;
@@ -13,11 +14,12 @@ const commentScheme = new schema(
       type: String
       
     },
-     blogId : {
-      type: mongoose.Types.ObjectId,
+     blogId :{
+      type: string,
       ref:"Blog"
     },
-  },
+  }
+  ,
   { timestamps: true }
 );
 
