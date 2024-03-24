@@ -23,7 +23,7 @@ export default {
         },
         responses: {
             "201": {
-                description: "User added successfully",
+                description: "User created successfully",
                 content: {
                     "application/json": {
                         schema: {
@@ -37,8 +37,7 @@ export default {
                 content: {
                     "application/json": {
                         example: {
-                            status: false,
-                            message: "Please fill all required fields",
+                            message: "Email is already registered",
                         },
                     },
                 },
@@ -48,8 +47,7 @@ export default {
                 content: {
                     "application/json": {
                         example: {
-                            status: false,
-                            message: "An error occurred while adding the user",
+                            message: "Internal server error",
                         },
                     },
                 },

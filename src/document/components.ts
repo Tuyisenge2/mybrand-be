@@ -55,12 +55,13 @@ export default {
             }
           },
         },
+
         BlogScheme:{
           type: "object",
           properties:{
             title:{
-              type:String,
-              unique: true
+              type:"string",
+              
             },
             summary:{
               type:"string",
@@ -75,55 +76,61 @@ export default {
             description:"ImageUrl"
             },
             commentArray: {
-              type:[]
-            },
-            likesArray: {
-              type: []  
-          }
+              type: "array", 
+              items: {
+                type: "string"
+              } },
+              likesArray: {
+                type: "array", 
+                items: {
+                  type: "string"
+                }
+              },
 
           }
         },
-          CommentScheme:{
-            type: "object",
-            properties:{
-            User:{
-              type:"string",
-               ref:"User"  
-                 
-            },
-            comment: {
-              type: "string"
-              
-            },
-             blogId : {
-              type:"string",
-              ref:"Blog"
-            }
-          }
-          },
-          QuerriesScheme:{
-            type: "object",
+        CommentScheme:{
+          type: "object",
           properties:{
-            email:{
-              type:"string"
-            },
-            message: {
-              type: "string"
-            },
-          }
+          User:{
+            type:"string",
+             ref:"User"  
+               
           },
-   BlogLikesScheme:{
-    type: "object",
-    properties:{
-      blogId: {
-        type: "string",
-        ref:"Blog"
-      }
-
+          comment: {
+            type: "string"
+            
+          },
+           blogId : {
+            type:"string",
+            ref:"Blog"
+          }
+        }
+        },
+        QuerriesScheme:{
+          type: "object",
+        properties:{
+          email:{
+            type:"string"
+          },
+          message: {
+            type: "string"
+          },
+        }
+        },
+ BlogLikesScheme:{
+  type: "object",
+  properties:{
+    blogId: {
+      type: "string",
+      ref:"Blog"
     }
 
-   }
-   ,       Error: {
+  }
+
+ }, 
+       
+   Error: {
           type: "object",
           properties: {
             message: {

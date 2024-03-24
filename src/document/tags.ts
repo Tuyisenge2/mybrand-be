@@ -1,7 +1,7 @@
 export default {
     tags: [
       {
-        name: "myBrand APIs", 
+        name: "All APIs", 
       },
     ],
     
