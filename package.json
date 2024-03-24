@@ -9,7 +9,6 @@
     "test": "jest --no-cache --detectOpenHandles",
     "test-test": "jest --watchAll --no-cache --detectOpenHandles",
     "test:ci": "jest --detectOpenHandles --coverage",
-    "build": "webpack",
     "prepublish": "npm run build"
   },
   "keywords": [],
