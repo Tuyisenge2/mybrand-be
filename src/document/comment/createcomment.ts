@@ -1,33 +1,43 @@
 export default {
     post: {
-        tags: ["Users"],
-        description: "Add new User",
-        operationId: "addUser",
+        tags: ["Comments"],
+        description: "create comment",
+        operationId: "createComment",
+        security: [
+            {
+              BearerAuth: [],
+            },
+          ],
+          parameters:[
+            {
+                name:"id",
+                in:"path",
+                schema:{
+                    type:"string"
+                },
+                required:true
+            }
+        ],
         requestBody: {
             content: {
                 "application/json": {
                     schema: {
                         type: "object",
                         properties: {
-                            firstname: { type: "string" },
-                            lastname: { type: "string" },
-                            dateOfBirth: { type: "string" },
-                            gender: { type: "string" },
-                            email: { type: "string", format: "email" },
-                            password: { type: "string", minLength: 8 },
+                             comment: { type: "string" }                            
                         },
-                        required: ["firstname","lastname","dateOfBirth","gender","email","password"],
+                        required: ["comment"],
                     },
                 },
             },
         },
         responses: {
             "201": {
-                description: "User created successfully",
+                description: "comment added successfully",
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/components/schemas/User",
+                            $ref: "#/components/schemas/Comment",
                         },
                     },
                 },
@@ -37,7 +47,7 @@ export default {
                 content: {
                     "application/json": {
                         example: {
-                            message: "Email is already registered",
+                            message:"invalid id"
                         },
                     },
                 },
@@ -47,7 +57,7 @@ export default {
                 content: {
                     "application/json": {
                         example: {
-                            message: "Internal server error",
+                            message:"server error",
                         },
                     },
                 },

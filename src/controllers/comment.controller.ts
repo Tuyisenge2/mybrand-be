@@ -22,8 +22,8 @@ const decoded=Jwt.verify(String(token),"eonfeinefiueriu") as any;
           
 const loggedUser= await userScheme.findById(decoded.id);
 
-
 //end  of searching user
+
     const Id =  req.params.id;
     if(!mongoose.Types.ObjectId.isValid(Id)){
     return res.status(400).json({
@@ -46,7 +46,7 @@ const com = await comment.save();
 console.log(com.comment);
 const userAndComment={
    User:com.User,
-   comments:com.comment
+   comments:comment.comment
 };
 if(userAndComment){
  blog.commentArray.push(userAndComment);
@@ -60,14 +60,15 @@ console.log(blog)
 return res.status(201).json({
     status:"Success",
     message:"Comment added successfully",
-    comment:com
+    blog:blog,
+    commentt:com
 })
 
 }catch(Error){
     console.error(Error);
     return res.status(500).json({
         status:"Denied access",
-        message:"incomplete operation",
+        message:"server error",
     
     })
 
@@ -75,7 +76,7 @@ return res.status(201).json({
 
 }
 
-// get all comments
+// get all comments on  one blog
 
 const getAllComment = async (req: Request, res: Response) => {
     try {

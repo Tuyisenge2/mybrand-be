@@ -13,7 +13,8 @@ import { UploadToCloud } from "../Helper/cloud";
         });
       } catch (error) {
         // Handle errors appropriately
-     return   res.status(500).json({ error: 'An error occurred while fetching blogs' });
+     return   res.status(500).json({
+         error: 'An error occurred while fetching blogs' });
       }
   
   }
@@ -103,7 +104,7 @@ const updateBlog = async (req: Request, res: Response ) => {
             blog:blog
         });
     } catch (error:any) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -111,14 +112,16 @@ const deleteBlog = async (req: Request, res: Response ) => {
     try {
         const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
         if (!deletedBlog) {
-            res.status(404).json({ error: "Blog doesn't exist!" });
+            res.status(404).json({
+                 error: "Blog doesn't exist!" });
             return;
         }
        return res.status(204).json({
         message:"blog deleted succeffully"
        });
     } catch(error:any) {
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({
+             error: "Internal Server Error" });
     }
 };
 

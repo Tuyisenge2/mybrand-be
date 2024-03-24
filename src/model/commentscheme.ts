@@ -8,7 +8,6 @@ const commentScheme = new schema(
     User:{
       type:String,
        ref:"User"  
-         
     },
     comment: {
       type: String

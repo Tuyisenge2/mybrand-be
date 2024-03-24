@@ -21,14 +21,15 @@ const GetAllQuerries =  async (req: Express.Request, res: Express.Response) => {
 //Create querries
 
 const newQuerries = async ( req: Express.Request, res: Express.Response) => {
-    const querries = new Querries( {
+    const querries = new Querries({
         email: req.body.email,
         message:req.body.message,
     })
     await querries.save()
    return res.status(200).json({
     status:200,
-    querries:querries})
+    querries:querries
+})
 }
 
 //Get individual querries
