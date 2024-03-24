@@ -3,7 +3,6 @@ import swaggerUi from "swagger-ui-express";
 import swaggerOutput from "./documentation/swagger_output.json"
 import swaggerUI from "swagger-ui-express";
 import docs from "./document";
-
 import express from "express";
 
 const app = express()
