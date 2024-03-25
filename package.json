@@ -8,9 +8,8 @@
     "dev": "ts-node-dev src/index.ts",
     "test": "jest --no-cache --detectOpenHandles",
     "test-test": "jest --watchAll --no-cache --detectOpenHandles",
-    "test:ci": "jest --detectOpenHandles --coverage",
-     "prepublish": "npm run build"
-  },
+    "test:ci": "jest --detectOpenHandles --coverage"
+    },
   "keywords": [],
   "author": "",
   "license": "ISC",
