@@ -7,13 +7,15 @@ const GetAllQuerries =  async (req: Express.Request, res: Express.Response) => {
     try {
         
         const querries = await Querries.find();
-       return  res.status(200).json({querries:querries,
-    status:200
+       return  res.status(200).json({
+        querries:querries,
+        status:200
     });
 
       } catch (error) {
-        // Handle errors appropriately
-       return res.status(500).json({ error: 'An error occurred while fetching querries' });
+       return res.status(500).json({ 
+        error: 'An error occurred while fetching querries'
+     });
       }
   
   }

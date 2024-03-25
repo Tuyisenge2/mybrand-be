@@ -23,7 +23,6 @@ const createBlogLike = async (req:Request, res:Response) => {
                  message: "Invalid blog ID" 
                         });
         }
-        const existingLike= await blogLikeScheme.findById(blogid);
 
         const blog= await blogSchem.findById(blogid);
 if (!blog) {
@@ -39,16 +38,29 @@ if (!blog) {
         });
 
         if(blog.likesArray.includes(like.userId)){
-            let index=blog.likesArray.indexOf(like.userId);
-            if(index !== -1)
+            let blogIndex=blog.likesArray.indexOf(like.userId);
+            if(blogIndex !== -1)
             {
-              blog.likesArray.splice(index,1);                
+              blog.likesArray.splice(blogIndex,1);                
             }
-            await blog.save();
+            
 
-            return res.status(201).json({ 
+            const deletedlike = await blogLikeScheme.findByIdAndDelete(loggedUser?._id);
+ 
+      let allLikes = await blogLikeScheme.find();
+
+       const filteredLikes = allLikes.filter(item => item.userId !== loggedUser?._id);
+    
+       const userIdsToDelete = filteredLikes.map(item => item._id);
+    
+        await blogLikeScheme.deleteMany({ _id: { $in: userIdsToDelete } });
+    
+
+                   await blog.save();
+                    return res.status(201).json({ 
                 message: "Like removed successfully",
-                blog:blog.likesArray                       
+                blog:blog.likesArray,
+                likes:allLikes                                     
                             });
 
         }
@@ -56,7 +68,7 @@ if (!blog) {
     blog.likesArray.push(like.userId);
 
           const savedLike= await like.save();
-          await blog.save();
+           await blog.save();
        
           return res.status(201).json({ 
             message: "Like Added successfully", 
@@ -76,12 +88,22 @@ const getBlogLikes = async (req:Request, res:Response) => {
         const blogId = req.params.id;
 
         if (!mongoose.Types.ObjectId.isValid(blogId)) {
-            return res.status(400).json({ message: "Invalid blog ID" });
-        }
+            return res.status(400).json({ 
+                message: "Invalid blog ID"
+             });
+                                  }
 
         const likes = await blogLikeScheme.find({ blogId: blogId });
+     if(!likes){
+        return res.status(404).json({ 
+            message: 'Blog has zero likes'
+         });
 
-        return res.status(200).json({ message: "Likes retrieved successfully", data: likes });
+     }
+        return res.status(200).json({
+             message: "Likes retrieved successfully",
+             data: likes
+                 });
     } catch (Error) {
         console.error(Error);
         return res.status(500).json({ message: "Internal server error", error: Error });

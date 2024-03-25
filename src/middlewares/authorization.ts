@@ -73,7 +73,7 @@ const isUSerLoggedIn=async(req:Request,res:Response,next:Function)=>{
     }catch (error){
         return res.status(400).json(
             {
-                message:"bad request for real"
+                message:"token is expired"
             }
         )
     }

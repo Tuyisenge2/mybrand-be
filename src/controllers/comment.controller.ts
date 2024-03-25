@@ -103,13 +103,15 @@ const getSingleComment = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'Invalid comment ID' });
         }
         
-        const comment = await Comment.findById(commentId);
+        const resultComment = await Comment.findById(commentId);
                 
-        if (!comment) {
+        if (!resultComment) {
             return res.status(404).json({ message: 'Comment not found' });
         }
         
-        return res.status(200).json({ message: 'Comment retrieved successfully', data: comment });
+        return res.status(200).json({ 
+            message: 'Comment retrieved successfully', 
+            data: resultComment.comment });
     } catch (error) {
         console.error('Error:', error);
         return res.status(500).json({ message: 'Internal server error', error: error });

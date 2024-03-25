@@ -1,18 +1,33 @@
 export default {
     get:{
-        tags: ["Blogs"],
-        description: "Get all blogs",
-        operationId: "getAllBlogs",
+        tags: ["Likes"],
+        description: "Get all Likes",
+        operationId: "getAllLikes",
+        security: [
+            {
+              BearerAuth: [],
+            },
+          ],
         responses: {
             "200": {
                 description: "success",
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/components/schemas/Blogs",
+                            $ref: "#/components/schemas/likeModel",
                         },
                     },
                 },
+            }, "404": {
+                description: "No likes",
+                content: {
+                    "application/json": {
+                        example: {
+                            message: "Blog has zero likes",
+                               },
+                    }
+                }
+                
             },
             "500": {
                 description: "Internal Server Error",

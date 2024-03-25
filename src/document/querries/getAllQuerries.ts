@@ -1,15 +1,15 @@
 export default {
     get:{
-        tags: ["Blogs"],
-        description: "Get all blogs",
-        operationId: "getAllBlogs",
+        tags: ["Querries"],
+        description: "Get all Querries",
+        operationId: "getAllQuerries",
         responses: {
             "200": {
                 description: "success",
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/components/schemas/Blogs",
+                            $ref: "#/components/schemas/Querries",
                         },
                     },
                 },
@@ -19,7 +19,7 @@ export default {
                 content: {
                     "application/json": {
                         example: {
-                            message: "Server error",
+                            error: "An error occurred while fetching querries",
                                },
                     }
                 }
