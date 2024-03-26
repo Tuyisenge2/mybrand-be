@@ -1,5 +1,6 @@
 import Querries from "../model/querries.mode";
 import Express from "express";
+import mongoose  from "mongoose";
 
 
 //Get all querries
