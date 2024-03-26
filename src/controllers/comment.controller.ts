@@ -77,7 +77,6 @@ return res.status(201).json({
 }
 
 // get all comments on  one blog
-
 const getAllComment = async (req: Request, res: Response) => {
     try {
         const id=req.params.id;

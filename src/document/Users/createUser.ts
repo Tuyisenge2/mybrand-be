@@ -32,8 +32,8 @@ export default {
                     },
                 },
             },
-            "400": {
-                description: "Bad Request",
+            "409": {
+                description: "conflict",
                 content: {
                     "application/json": {
                         example: {
