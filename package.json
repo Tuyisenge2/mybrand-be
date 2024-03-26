@@ -35,7 +35,12 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ]
   },
   "transform": {
     "^.+\\.(ts|tsx)?$": "ts-jest",
