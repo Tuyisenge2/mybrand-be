@@ -9,9 +9,6 @@ on:
   pull_request:
     branches: [ "develop" ]
 
-env:
-    COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-
 jobs:
   build:
 
@@ -32,5 +29,10 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - run: npm run test:ci
-    - run: npx coveralls < coverage/lcov.info
+    - run: npm run test:
+    - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@v2.2.3
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}      
+     - run: npx coveralls < coverage/lcov.info
+
