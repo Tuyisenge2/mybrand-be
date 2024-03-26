@@ -1,0 +1,2 @@
+- run: npm run test:ci
+    - run: npx coveralls < coverage/lcov.info
