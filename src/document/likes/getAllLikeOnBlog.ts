@@ -3,11 +3,8 @@ export default {
         tags: ["Likes"],
         description: "Get all Likes",
         operationId: "getAllLikes",
-        security: [
-            {
-              BearerAuth: [],
-            },
-          ],  parameters:[
+          
+          parameters:[
             {
                 name:"id",
                 in:"path",
