@@ -1,6 +1,6 @@
 import  express from "express";
 import { isUSerLoggedIn } from "../middlewares/authorization";
-
+import { checkAdmin } from "../middlewares/authorization";
 const comRouter=express.Router();
 
 import commentController from "../controllers/comment.controller";

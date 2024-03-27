@@ -7,7 +7,16 @@ export default {
             {
               BearerAuth: [],
             },
-          ],
+          ],  parameters:[
+            {
+                name:"id",
+                in:"path",
+                schema:{
+                    type:"string"
+                },
+                required:true
+            }
+        ],
         responses: {
             "200": {
                 description: "success",
