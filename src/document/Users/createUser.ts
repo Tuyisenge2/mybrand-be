@@ -37,7 +37,7 @@ export default {
                 content: {
                     "application/json": {
                         example: {
-                            message: "Email is already registered",
+                            message: "conflict",
                         },
                     },
                 },

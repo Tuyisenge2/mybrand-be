@@ -3,11 +3,7 @@ export default {
         tags: ["Comments"],
         description: "Get all Comments",
         operationId: "getAllBlogs",
-        security: [
-            {
-              BearerAuth: [],
-            },
-          ],  parameters:[
+           parameters:[
             {
                 name:"id",
                 in:"path",

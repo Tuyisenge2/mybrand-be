@@ -13,7 +13,6 @@ const newComment= async (req:Request , res:Response )=>{
 try{
 // find user who comment
 
-
 let token;        
   if(req.headers.authorization){
    token=req.headers.authorization;
@@ -81,13 +80,28 @@ return res.status(201).json({
     try {
         const id=req.params.id;
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: 'Invalid comment ID' });
+            return res.status(400).json({ 
+                message: 'Invalid comment ID' 
+            });
         }
+        let Arraycom:string[]=[];
         const comments = await Comment.find({ blogId: id });
+      
+        await Promise.all(comments.map(async (item) => {
+            Arraycom.push(item.comment as string);
+        }));
+        
+
         if (!comments) {
-            return res.status(404).json({ message: 'No comments found' });
+            return res.status(404).json({ 
+                message: 'No comments found' 
+            });
         }
-        return res.status(200).json({ message: 'Comments retrieved successfully', data: comments });
+        
+        return res.status(200).json({ 
+            message: 'Comments retrieved successfully', 
+            Comments: Arraycom
+        });
     } catch (error) {
         console.error('Error:', error);
         return res.status(500).json({ message: 'Internal server error', error: error });

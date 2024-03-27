@@ -91,18 +91,25 @@ const getBlogLikes = async (req:Request, res:Response) => {
             return res.status(400).json({ 
                 message: "Invalid blog ID"
              });
-                                  }
+                                     }
 
+
+ let allLike:string[]=[]; 
         const likes = await blogLikeScheme.find({ blogId: blogId });
      if(!likes){
         return res.status(404).json({ 
-            message: 'Blog has zero likes'
+            message: 'Blog not found'
          });
 
      }
+likes.forEach((item)=>{
+    allLike.push(item.userId as string);
+})
+
+
         return res.status(200).json({
              message: "Likes retrieved successfully",
-             data: likes
+             Likes: allLike
                  });
     } catch (Error) {
         console.error(Error);

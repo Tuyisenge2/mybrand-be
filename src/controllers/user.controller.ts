@@ -17,7 +17,9 @@ import { Request, Response } from "express";
         const existingUser = await userScheme.findOne({ email });
         if (existingUser) {
             return res.status(400).
-            json({ message: 'Email is already registered' });
+            json({  
+                message: 'Email is already registered'
+             });
         }
         const salt=await bcrypt.genSalt(10)
 const hashedPass=await  bcrypt.hash(password,salt);
@@ -55,7 +57,6 @@ const hashedPass=await  bcrypt.hash(password,salt);
 
         
 
-        const user = await userScheme.findOne({ email });
    
         //!user||user.password===null||user.password===undefined
          
@@ -65,6 +66,7 @@ const hashedPass=await  bcrypt.hash(password,salt);
                 message:"an empty filled to fill "
             })
         }
+        const user = await userScheme.findOne({ email });
 
       if(user?.password===null||user?.password===undefined) {
     return res.status(404).json({
@@ -80,7 +82,7 @@ if (existingToken) {
 
          if (decoded) {
              return res.status(409).json({
-                message: 'User is already logged in'
+                message: 'Conflict occured'
             });
         } else {
          }

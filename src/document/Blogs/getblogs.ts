@@ -13,6 +13,14 @@ export default {
                         },
                     },
                 },
+            }, "404": {
+                description: "blog was not found",
+                content:{
+                    "application/json":{
+                        example:{
+               error: "Blog doesn't exist!"                         }
+                    }
+                }
             },
             "500": {
                 description: "Internal Server Error",

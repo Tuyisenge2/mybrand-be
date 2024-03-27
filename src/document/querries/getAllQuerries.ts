@@ -13,6 +13,15 @@ export default {
                         },
                     },
                 },
+            },  "404": {
+                description: "Bad Request",
+                content: {
+                    "application/json": {
+                        example: {
+                            message:"Querries  not found"
+                        },
+                    },
+                },
             },
             "500": {
                 description: "Internal Server Error",

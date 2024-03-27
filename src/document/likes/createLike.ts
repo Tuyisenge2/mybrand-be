@@ -36,6 +36,25 @@ export default {
                     },
                 },
             },
+            "400": {
+                description: "invalid id",
+                content:{
+                    "application/json":{
+                        example:{
+               error: "invalid id!"                         }
+                    }
+                }
+            },
+            "404": {
+                description: "Bad Request",
+                content: {
+                    "application/json": {
+                        example: {
+                            message:"Blog not found"
+                        },
+                    },
+                },
+            },
             "500": {
                 description: "Internal Server Error",
                 content: {

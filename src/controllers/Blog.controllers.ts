@@ -6,6 +6,15 @@ import { UploadToCloud } from "../Helper/cloud";
   const GetAllblog =  async ( req: Request, res: Response ) => {
     try {        
         const blogs = await Blog.find();
+
+    if(!blogs){
+        return res.status(404).json({ 
+            error: "Blog no blog Found!" 
+        });
+       
+    }
+
+
         return res.status(200).json({
             status:200,
             message:"success",
@@ -42,9 +51,9 @@ const newBlog = async (req: Request, res: Response ) => {
     const existingTitle = await Blog.findOne({title:req.body.title });
     
     if(existingTitle){
-    return res.status(400).json({
-        status:400,
-        message:"Title has been used"
+    return res.status(409).json({
+        status:409,
+        message:"conflict on title of Blogs"
     })
 
 }
@@ -72,12 +81,15 @@ const singleBlog = async (req: Request, res: Response ) => {
     try {
         const blog = await Blog.findOne({ _id: req.params.id });
         if (!blog) {
-            res.status(404).json({ error: "Blog doesn't exist!" });
+            res.status(404).json({ 
+                error: "Blog doesn't exist!" 
+            });
             return;
         }
         res.status(200).json({
-            blog:blog,
-            message:"single blog returned"
+            message:"single blog returned",
+            blog:blog
+            
             });
     } catch(error:any) {
         res.status(500).json({ error: "Internal Server Error" });
@@ -97,14 +109,19 @@ const updateBlog = async (req: Request, res: Response ) => {
         }, { new: true });
 
         if (!blog) {
-            res.status(404).json({ error: "Blog doesn't exist!" });
+            res.status(404).json({
+                 error: "Blog doesn't exist!" 
+                });
             return;
         }
-        res.status(200).json({
+
+      return  res.status(200).json({
             blog:blog
         });
     } catch (error:any) {
-        res.status(500).json({ error: error.message });
+      return  res.status(500).json({ 
+            error: error.message
+         });
     }
 };
 
@@ -120,7 +137,7 @@ const deleteBlog = async (req: Request, res: Response ) => {
         message:"blog deleted succeffully"
        });
     } catch(error:any) {
-        res.status(500).json({
+     return   res.status(500).json({
              error: "Internal Server Error" });
     }
 };
