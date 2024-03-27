@@ -18,6 +18,7 @@
     "@types/multer": "^1.4.11",
     "@types/swagger-ui-express": "^4.1.6",
     "bcrypt": "^5.1.1",
+    "bufferlist": "^0.1.0",
     "check-code-coverage": "^1.10.5",
     "cloudinary": "^2.0.3",
     "code-coverage": "^0.0.2",
