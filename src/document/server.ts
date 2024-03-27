@@ -7,7 +7,7 @@ export default  {
       }
       ,
       {
-        url:"https://sore-jade-rooster.cyclic.app/",
+        url:"https://mybrand-be-zlsl.onrender.com",
         description: "Online server",
       }
     ],
