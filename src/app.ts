@@ -3,13 +3,28 @@ import swaggerUi from "swagger-ui-express";
 import swaggerOutput from "./documentation/swagger_output.json"
 import swaggerUI from "swagger-ui-express";
 import docs from "./document";
+import cors from "cors";
 import express from "express";
 
 const app = express()
+const corsOpts = {
+    origin: '*',
+    
+    methods: [
+    'GET',
+    'POST',
+    'DELETE',
+    'PATCH',
+    'PUT'
+    ],
+}
+    app.use(cors(corsOpts));
+
 
 app.use(express.json()) // new
 
- 
+
+
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(docs));
 
 
