@@ -32,7 +32,6 @@ const hashedPass=await  bcrypt.hash(password,salt);
             gender,
             Role
         });
-  console.log(hashedPass)
         await newUser.save();
 
        return res.status(201).json({ 
