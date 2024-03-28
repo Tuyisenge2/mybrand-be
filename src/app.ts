@@ -3,6 +3,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerOutput from "./documentation/swagger_output.json"
 import swaggerUI from "swagger-ui-express";
 import docs from "./document";
+import cors from "cors";
 import express from "express";
 
 const app = express()
@@ -11,6 +12,23 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
   });
+  const corsOpts = {
+    origin: '*',
+    
+    methods: [
+    'GET',
+    'POST',
+    'DELETE',
+    'PATCH',
+    'PUT'
+    ],
+    
+    allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    ],
+    };
+  app.use(cors(corsOpts));
 app.use(express.json()) // new
 
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(docs));
