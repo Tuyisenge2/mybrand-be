@@ -14,14 +14,12 @@ import { UploadToCloud } from "../Helper/cloud";
        
     }
 
-
         return res.status(200).json({
             status:200,
             message:"success",
             blog:blogs
         });
       } catch (error) {
-        // Handle errors appropriately
      return   res.status(500).json({
          error: 'An error occurred while fetching blogs' });
       }
